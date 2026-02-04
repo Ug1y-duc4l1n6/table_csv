@@ -1,0 +1,6 @@
+Getting top 10 players with career Homeruns
+    SELECT playerID, sum(HR) as careerHR
+    FROM batting
+    GROUP BY playerID
+    ORDER BY careerHR desc
+    LIMIT 10
