@@ -4,16 +4,15 @@ import pandas as pd
 conn = sqlite3.connect('../baseball.db')
 cursor = conn.cursor()
 query = """
-    SELECT teamID, sum(HR) as seasonHR
-    FROM batting
-    WHERE yearID = 2025
-    GROUP BY teamID
-    HAVING seasonHR >= 200
+    Select playerID, batting.yearID, name, batting.HR
+    FROM batting inner join teams
+    ON batting.teamID = teams.teamID AND batting.yearID = teams.yearID
+    WHERE  playerID = 'ruthba01'
 """
 cursor.execute(query)
 results = cursor.fetchall()
 conn.close()
-results_df = pd.DataFrame(results, columns=['teams','homeruns'])
+results_df = pd.DataFrame(results)
 print(results_df)
 
 
@@ -33,5 +32,23 @@ print(results_df)
     WHERE playerID LIKE 'ch%'
     GROUP BY playerID
 """
-
+"""
+    SELECT teamID, sum(HR) as seasonHR
+    FROM batting
+    WHERE yearID = 2025
+    GROUP BY teamID
+    HAVING seasonHR >= 200
+"""
+"""
+    Select *
+    FROM batting inner join teams
+    ON batting.teamID = teams.teamID AND batting.yearID = teams.yearID
+    WHERE batting.yearID = 1976 AND playerID = 'schmimi01'
+"""
+"""
+    Select playerID, name
+    FROM batting inner join teams
+    ON batting.teamID = teams.teamID AND batting.yearID = teams.yearID
+    WHERE batting.yearID = 1976
+"""
 '''
